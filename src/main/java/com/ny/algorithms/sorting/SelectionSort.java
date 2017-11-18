@@ -1,25 +1,25 @@
 package com.ny.algorithms.sorting;
 
-import java.util.Arrays;
-
 import com.ny.util.Util;
 
+import java.util.Arrays;
+
 /**
- * repeatedly identifies the smallest remaining unsorted element and 
+ * repeatedly identifies the smallest remaining unsorted element and
  * puts it at the end of the sorted portion of the array.
- * @author Neeraj
  *
+ * @author Neeraj
  */
 public class SelectionSort {
-
+	
 	private static void selectionSort(int[] s, int n) {
 		
-		for(int i=0; i<n-1; i++) {
+		for (int i = 0; i < n - 1; i++) {
 			
 			// find min element index operation
 			int minElementIndex = i;
-			for(int j=i+1; j<n; j++) {
-				if(s[j] < s[minElementIndex]) {
+			for (int j = i + 1; j < n; j++) {
+				if (s[j] < s[minElementIndex]) {
 					minElementIndex = j;
 				}
 			}
@@ -33,7 +33,7 @@ public class SelectionSort {
 			System.out.println();
 		}
 	}
-
+	
 	public static void main(String[] args) {
 		int[] s = Util.getRandomNumberArray();
 		System.out.println("ArrayLength: " + s.length);

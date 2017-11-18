@@ -1,14 +1,13 @@
 package com.ny.datastructure;
 
 /**
- * Singly linked list with a pointer pointing only forwards TODO: refactor to
- * work with generic types
- * 
- * @author NY
+ * Singly linked list with a pointer pointing only forwards
+ * TODO: refactor to work with generic types
  *
+ * @author NY
  */
 public class SinglyLinkedList {
-
+	
 	/*
 	 * Print the Elements of a Linked List
 	 */
@@ -21,7 +20,7 @@ public class SinglyLinkedList {
 			}
 		}
 	}
-
+	
 	/*
 	 * Given the head node prints the elements of a Linked List from tail to head
 	 * using recursion
@@ -32,7 +31,7 @@ public class SinglyLinkedList {
 			System.out.println(head.data);
 		}
 	}
-
+	
 	/*
 	 * Given the head node prints the elements of a Linked List from tail to head
 	 * using a second list. Takes one traversal to create the new list, one other
@@ -41,7 +40,7 @@ public class SinglyLinkedList {
 	public void printReverseIteratively(Node head) {
 		if (head != null) {
 			Node newList = new Node(head.data);
-
+			
 			Node temp = head.next;
 			while (newList != null && temp != null) {
 				newList = insertAtHead(newList, temp.data);
@@ -50,7 +49,7 @@ public class SinglyLinkedList {
 			print(newList);
 		}
 	}
-
+	
 	/*
 	 * Insert a node at the head of a linked list. Returns head node.
 	 */
@@ -61,7 +60,7 @@ public class SinglyLinkedList {
 		}
 		return node;
 	}
-
+	
 	/*
 	 * Insert a Node at the Tail of a Linked List. Returns head node.
 	 */
@@ -78,19 +77,16 @@ public class SinglyLinkedList {
 			return head;
 		}
 	}
-
+	
 	/**
 	 * Insert a node at a specific position in a linked list. In this
 	 * implementation, it is assumed that the position position will always be
 	 * between 0 and the number of the elements in the list (inclusive).
-	 * 
-	 * @param head
-	 *            The head node
-	 * @param data
-	 *            The new node's data
-	 * @param position
-	 *            The position at which the new node is to be inserted. 0 for head,
-	 *            and so on.
+	 *
+	 * @param head     The head node
+	 * @param data     The new node's data
+	 * @param position The position at which the new node is to be inserted. 0 for head,
+	 *                 and so on.
 	 * @return head
 	 */
 	public Node insertAtPosition(Node head, int data, int position) {
@@ -98,7 +94,7 @@ public class SinglyLinkedList {
 		if (head == null) {
 			return newNode;
 		}
-
+		
 		if (position == 0) {
 			newNode.next = head;
 			return newNode;
@@ -111,27 +107,27 @@ public class SinglyLinkedList {
 		}
 		newNode.next = currNode.next;
 		currNode.next = newNode;
-
+		
 		return head;
 	}
-
+	
 	/**
 	 * Delete a Node at given position in an iterative manner.
-	 * 
+	 *
 	 * @param head
 	 * @param position
 	 * @return head node
 	 */
 	public Node deleteAtPosition(Node head, int position) {
-
+		
 		if (head == null) {
 			return null;
 		}
-
+		
 		if (position == 0) {
 			return head.next;
 		}
-
+		
 		Node prev = head;
 		for (int i = 0; i < position - 1; i++) {
 			prev = prev.next;
@@ -139,35 +135,35 @@ public class SinglyLinkedList {
 		prev.next = prev.next.next;
 		return head;
 	}
-
+	
 	/**
 	 * Delete a Node at given position recursively. Needs O(n) space.
-	 * 
+	 *
 	 * @param head
 	 * @param position
 	 * @return head node
 	 */
 	public Node deleteAtPositionRecursively(Node head, int position) {
-
+		
 		if (position == 0) {
 			return head.next;
 		}
-
+		
 		head.next = deleteAtPositionRecursively(head.next, position - 1);
-
+		
 		return head;
 	}
-
+	
 	public Node reverseIteratively(Node head) {
-
+		
 		if (head == null || head.next == null) {
 			return head;
 		}
-
+		
 		Node prev = null;
 		Node curr = head;
 		Node next = null;
-
+		
 		while (curr != null) {
 			next = curr.next;
 			curr.next = prev;
@@ -176,20 +172,20 @@ public class SinglyLinkedList {
 		}
 		return prev;
 	}
-
+	
 	public Node reverseRecursively(Node head) {
-
+		
 		if (head == null || head.next == null) {
 			return head;
 		}
-
+		
 		Node remaining = reverseRecursively(head.next);
 		head.next.next = head;
 		head.next = null;
-
+		
 		return remaining;
 	}
-
+	
 	/*
 	 * Compare two linked lists A and B Return 1 if they are identical and 0 if they
 	 * are not.
@@ -198,7 +194,7 @@ public class SinglyLinkedList {
 		if (headA == null && headB == null) {
 			return 1;
 		}
-
+		
 		while (headA != null && headB != null) {
 			if (headA.data != headB.data) {
 				return 0;
@@ -212,18 +208,18 @@ public class SinglyLinkedList {
 			return 0;
 		}
 	}
-
+	
 	/*
 	 * Given two head nodes of two sorted lists, merges the two lists into one
 	 * sorted list using recursion
 	 */
 	public Node mergeSortedRecursively(Node headA, Node headB) {
-
+		
 		if (headA == null) {
 			return headB;
 		}
 		if (headB != null) {
-
+			
 			if (headA.data < headB.data) {
 				headA.next = mergeSortedRecursively(headA.next, headB);
 				return headA;
@@ -231,16 +227,16 @@ public class SinglyLinkedList {
 			headB.next = mergeSortedRecursively(headA, headB.next);
 			return headB;
 		}
-
+		
 		return headA;
 	}
-
+	
 	/*
 	 * Given two head nodes of two sorted lists, merges the two lists into one
 	 * sorted list using iteration
 	 */
 	public Node mergeSorted(Node currA, Node currB) {
-
+		
 		if (currA == null) {
 			return currB;
 		} else if (currB == null) {
@@ -276,24 +272,23 @@ public class SinglyLinkedList {
 		} else {
 			n.next = currA;
 		}
-
+		
 		return head;
-
+		
 	}
-
+	
 	/**
 	 * Simple node which works with primitive integers for now
-	 * 
-	 * @author NY
 	 *
+	 * @author NY
 	 */
 	private static class Node {
 		public int data;
 		public Node next;
-
+		
 		public Node(int data) {
 			this.data = data;
 		}
 	}
-
+	
 }
