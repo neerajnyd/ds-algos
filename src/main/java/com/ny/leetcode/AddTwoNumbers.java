@@ -6,15 +6,6 @@ package com.ny.leetcode;
  */
 public class AddTwoNumbers {
 	
-	static class ListNode {
-		int val;
-		ListNode next;
-		
-		ListNode(int x) {
-			val = x;
-		}
-	}
-	
 	public static void main(String[] args) {
 		ListNode one = new ListNode(2);
 		ListNode two = new ListNode(4);
@@ -28,8 +19,7 @@ public class AddTwoNumbers {
 		four.next = five;
 		five.next = six;
 		
-		final ListNode node = officialIterative(one, four);
-		ListNode temp = node;
+		ListNode temp = officialIterative(one, four);
 		while (temp != null) {
 			System.out.print(temp.val + " ");
 			temp = temp.next;
