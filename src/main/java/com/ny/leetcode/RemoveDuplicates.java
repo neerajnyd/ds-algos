@@ -54,7 +54,6 @@ public class RemoveDuplicates {
 				nums[k - localCount] = nums[k];
 			}
 			t -= localCount;
-			
 		}
 		return nums.length - totalCount;
 	}
