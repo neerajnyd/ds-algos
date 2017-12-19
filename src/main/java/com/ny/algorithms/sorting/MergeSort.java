@@ -1,6 +1,6 @@
 package com.ny.algorithms.sorting;
 
-import com.ny.FunctionalUtil;
+import com.ny.util.FunctionalUtil;
 import com.ny.util.Util;
 
 import java.util.Arrays;

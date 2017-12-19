@@ -1,4 +1,4 @@
-package com.ny.ctci.linkedlists;
+package com.ny.ctci.datastructures;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class LinkedList {
 	
-	public Node getPointOfLopp(Node head) {
+	public Node getPointOfLoop(Node head) {
 		
 		Node slow = head;
 		Node fast = head;

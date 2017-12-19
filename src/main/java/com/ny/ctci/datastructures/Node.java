@@ -1,4 +1,4 @@
-package com.ny.ctci.linkedlists;
+package com.ny.ctci.datastructures;
 
 public class Node {
 	

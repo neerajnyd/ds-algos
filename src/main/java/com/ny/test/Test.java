@@ -18,6 +18,14 @@ public class Test {
 		String s = "abc";
 		System.out.println(s.indexOf("d"));
 		
+		
+		
+	}
+	
+	public static void genericTest(List<? super Number> list){
+		List<Number> list2 = new ArrayList<>();
+		list.add(1);
+		
 	}
 	
 	public static int ascii_deletion_distance(String str1, String str2) {

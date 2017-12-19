@@ -1,4 +1,4 @@
-package com.ny;
+package com.ny.util;
 
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
