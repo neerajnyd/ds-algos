@@ -62,7 +62,7 @@ public class SinglyLinkedList {
 	}
 	
 	/*
-	 * Insert a Node at the Tail of a Linked List. Returns head node.
+	 * Insert a ListNode at the Tail of a Linked List. Returns head node.
 	 */
 	public Node insertAtEnd(Node head, int x) {
 		Node node = new Node(x);
@@ -112,7 +112,7 @@ public class SinglyLinkedList {
 	}
 	
 	/**
-	 * Delete a Node at given position in an iterative manner.
+	 * Delete a ListNode at given position in an iterative manner.
 	 *
 	 * @param head
 	 * @param position
@@ -137,7 +137,7 @@ public class SinglyLinkedList {
 	}
 	
 	/**
-	 * Delete a Node at given position recursively. Needs O(n) space.
+	 * Delete a ListNode at given position recursively. Needs O(n) space.
 	 *
 	 * @param head
 	 * @param position

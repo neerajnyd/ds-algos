@@ -5,18 +5,24 @@ import java.util.Set;
 import java.util.Stack;
 
 public class LinkedList {
-	
-	public Node getPointOfLoop(Node head) {
+
+	/**
+	 * take a fast and a slow node. Move till slow == fast
+	 * then point slow at head
+	 * @param head the head ListNode
+	 * @return null if fast or fast.next reaches null else the node at which the cycle exists
+	 */
+	public ListNode getPointOfLoop(ListNode head) {
 		
-		Node slow = head;
-		Node fast = head;
+		ListNode slow = head;
+		ListNode fast = head;
 		
 		while ((fast != null && fast.next != null) || slow != fast) {
 			slow = slow.next;
 			fast = fast.next.next;
 		}
 		
-		if (fast == null && fast.next == null) {
+		if (fast == null || fast.next == null) {
 			return null;
 		}
 		
@@ -28,68 +34,80 @@ public class LinkedList {
 		
 		return slow;
 	}
-	
-	public Node intersectingNode(Node n1, Node n2) {
+
+	/**
+	 * return the node at which two linked lists intersect
+	 * @param head1
+	 * @param head2
+	 * @return
+	 */
+	public ListNode intersectingNode(ListNode head1, ListNode head2) {
 		
-		if (n1 == null || n2 == null) return null;
+		if (head1 == null || head2 == null) return null;
 		
-		Node t1 = n1, t2 = n2;
+		ListNode temp1 = head1, temp2 = head2;
 		
+		/*
+		count of nodes in each list
+		 */
 		int count1 = 1;
 		int count2 = 1;
-		while (t1.next != null) {
+		while (temp1.next != null) {
 			count1 += 1;
-			t1 = t1.next;
+			temp1 = temp1.next;
 		}
-		while (t2.next != null) {
+		while (temp2.next != null) {
 			count2 += 1;
-			t2 = t2.next;
+			temp2 = temp2.next;
 		}
 		/*
-		if t1 == t2 that would mean the lists intersected.
+		if temp1 == temp2 that would mean the lists have the same end because they intersected.
 		If not then they did not and we would return
 		 */
-		if (t1 != t2) {
+		if (temp1 == temp2) {
+			int absValue = Math.abs(count1 - count2);
+
+			final ListNode intersectingNode = count1 >= count2
+					? getIntersectingNode(head1, head2, absValue)
+					: getIntersectingNode(head2, head1, absValue);
+			return intersectingNode;
+		}else{
 			return null;
 		}
-		Node intersectingNode;
-		int absValue = Math.abs(count1 - count2);
-		if (count1 >= count2) {
-			intersectingNode = getIntersectingNode(n1, n2, absValue);
-		} else {
-			intersectingNode = getIntersectingNode(n2, n1, absValue);
-		}
-		
-		return intersectingNode;
+
 	}
-	
-	private Node getIntersectingNode(Node n1, Node n2, int count) {
+
+	/*
+	List with head1 is "differenceInTwoLists" greater than list with head2
+	So we traverse head1 differenceInTwoLists times and then move both lists together to see if the nodes are equal
+	 */
+	private ListNode getIntersectingNode(ListNode head1, ListNode head2, int differenceInTwoLists) {
 		
-		Node t1 = n1;
-		Node t2 = n2;
+		ListNode temp1 = head1;
+		ListNode temp2 = head2;
 		
-		for (int i = 0; i < count; i++) {
-			t1 = t1.next;
-			
+		for (int i = 0; i < differenceInTwoLists; i++) {
+			temp1 = temp1.next;
 		}
 		
-		while (t1 != null) {
-			
-			if (t1 == t2) {
-				return t1;
+		while (temp1 != null) {
+			if (temp1 == temp2) {
+				return temp1;
 			}
-			
-			t1 = t1.next;
-			t2 = t2.next;
+			temp1 = temp1.next;
+			temp2 = temp2.next;
 		}
-		
+		//lists did not intersect. This cannot happen because of the check in parent method.
 		return null;
 	}
 	
-	public boolean isPalindrome(Node head) {
-		Node fast = head;
-		Node slow = head;
-		
+	public boolean isPalindrome(ListNode head) {
+		ListNode fast = head;
+		ListNode slow = head;
+
+		/*
+		stack to store half of the list
+		 */
 		Stack<Integer> stack = new Stack<>();
 		
 		while (fast != null && fast.next != null) {
@@ -99,7 +117,9 @@ public class LinkedList {
 		}
 		
 		/*
-		if list has odd number of elements then we need to ignore the mid element
+		if fast == null then list has even no of elements
+		if fast != null then list has odd number of elements
+			AND we need to ignore the mid element by moving slow over
 		 */
 		if (fast != null) {
 			slow = slow.next;
@@ -115,17 +135,17 @@ public class LinkedList {
 		return true;
 	}
 	
-	public Node deleteNode(Node head, int d) {
+	public ListNode deleteNode(ListNode head, int d) {
 		
 		if (head.val == d) {
 			return head.next;
 		}
 		
-		Node t = head;
+		ListNode t = head;
 		
 		while (t.next != null) {
 			
-			Node node = t.next;
+			ListNode node = t.next;
 			if (node.val == d) {
 				t.next = t.next.next;
 				return head;
@@ -136,7 +156,7 @@ public class LinkedList {
 		return head;
 	}
 	
-	public Node deleteNodeAtPosition(Node head, int position) {
+	public ListNode deleteNodeAtPosition(ListNode head, int position) {
 		
 		if (head == null) {
 			return null;
@@ -146,7 +166,7 @@ public class LinkedList {
 			return head.next;
 		}
 		
-		Node prev = head;
+		ListNode prev = head;
 		for (int i = 0; i < position - 1; i++) {
 			prev = prev.next;
 		}
@@ -156,14 +176,14 @@ public class LinkedList {
 		
 	}
 	
-	public Node reverseList(Node head) {
+	public ListNode reverseList(ListNode head) {
 		
 		if (head == null || head.next == null) return head;
 		
 		
-		Node prev = null;
-		Node curr = head;
-		Node next;
+		ListNode prev = null;
+		ListNode curr = head;
+		ListNode next;
 		
 		while (curr != null) {
 			next = curr.next;
@@ -175,7 +195,7 @@ public class LinkedList {
 		return prev;
 	}
 	
-	public Node removeDuplicates(Node head, boolean buffer) {
+	public ListNode removeDuplicates(ListNode head, boolean buffer) {
 		if (!buffer) {
 			return removeDuplicates(head); //if no buffer is allowed call that method
 		}
@@ -183,8 +203,8 @@ public class LinkedList {
 		if (head == null || head.next == null) return head;
 		
 		Set<Integer> set = new HashSet<>();
-		Node prev = null;
-		Node curr = head;
+		ListNode prev = null;
+		ListNode curr = head;
 		while (curr != null) {
 			
 			if (set.contains(curr.val)) {
@@ -199,12 +219,12 @@ public class LinkedList {
 		return head;
 	}
 	
-	public Node removeDuplicates(Node head) {
+	public ListNode removeDuplicates(ListNode head) {
 		
-		Node curr = head;
+		ListNode curr = head;
 		
 		while (curr != null) {
-			Node runner = curr;
+			ListNode runner = curr;
 			while (runner.next != null) {
 				if (runner.next.val == curr.val) {
 					runner.next = runner.next.next;
@@ -223,12 +243,12 @@ public class LinkedList {
 	 * @param head the head of the list
 	 * @return kth element
 	 */
-	public Node kThToLastNode(Node head, int k) {
+	public ListNode kThToLastNode(ListNode head, int k) {
 		
-		Node p1 = head;
-		Node p2 = head;
+		ListNode p1 = head;
+		ListNode p2 = head;
 		int count = 0;
-		while (p1 != null && count == k) {
+		while (p1 != null && count != k) {
 			p1 = p1.next;
 			count++;
 		}
@@ -240,10 +260,10 @@ public class LinkedList {
 		
 	}
 	
-	public Node removeMidNode(Node head, Node c) {
+	public ListNode removeMidNode(ListNode head, ListNode c) {
 		
-		Node prev = head;
-		Node curr = head;
+		ListNode prev = head;
+		ListNode curr = head;
 		
 		while (curr != null && curr != c) {
 			prev = curr;
@@ -260,21 +280,21 @@ public class LinkedList {
 	 * @param c
 	 * @return
 	 */
-	public boolean removeMidNode(Node c) {
+	public boolean removeMidNode(ListNode c) {
 		if (c == null || c.next == null) {
 			return false; //failure scenario
 		}
 		
-		Node temp = c.next;
+		ListNode temp = c.next;
 		c.val = temp.val;
 		c.next = temp.next;
 		return true;
 	}
 	
-	public Node addTwoNumbers(Node n1, Node n2) {
+	public ListNode addTwoNumbers(ListNode n1, ListNode n2) {
 		
-		Node dummy = new Node(0);
-		Node p1 = n1, p2 = n2, curr = dummy;
+		ListNode dummy = new ListNode(0);
+		ListNode p1 = n1, p2 = n2, curr = dummy;
 		int carry = 0;
 		while (p1 != null || p2 != null) {
 			int x = p1 != null ? p1.val : 0;
@@ -286,14 +306,14 @@ public class LinkedList {
 			int sum = x + y + carry;
 			carry = sum / 10;
 			sum %= 10;
-			Node node = new Node(sum);
+			ListNode node = new ListNode(sum);
 			curr.next = node;
 			
 			curr = curr.next;
 		}
 		
 		if (carry > 0) {
-			curr.next = new Node(carry);
+			curr.next = new ListNode(carry);
 		}
 		return dummy.next;
 		
