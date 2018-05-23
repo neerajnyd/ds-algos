@@ -1,7 +1,11 @@
 package com.ny.ctci.datastructures;
 
 public class TreeNode {
-	public String name;
+	public int val;
 	public TreeNode left;
 	public TreeNode right;
+
+	public TreeNode(int val) {
+		this.val = val;
+	}
 }
