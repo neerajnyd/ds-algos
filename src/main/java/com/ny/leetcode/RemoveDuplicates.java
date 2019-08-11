@@ -1,5 +1,8 @@
 package com.ny.leetcode;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Given a sorted array, remove the duplicates in-place such that each element appear
  * only once and return the new length.
@@ -17,25 +20,22 @@ public class RemoveDuplicates {
 	
 	/*
 	ii is the slow-runner while jj is the fast-runner.
-	As long as nums[i] = nums[j], we increment j to skip the duplicate.
-	When we encounter nums[j]≠ nums[i], the duplicate run has ended
-	so we must copy its val to nums[i + 1].
+	As long as A[i] = A[j], we increment j to skip the duplicate.
+	When we encounter A[j]≠ A[i], the duplicate run has ended
+	so we must copy its val to A[i + 1].
 	ii is then incremented and we repeat the same process again
 	until jj reaches the end of array.
 	 */
 	public static int removeDuplicatesOfficial(int[] nums) {
-		if (nums.length == 0) {
-			return 0;
-		}
-		
-		int i = 0;
-		for (int j = 1; j < nums.length; j++) {
-			if (nums[j] != nums[i]) {
-				i++;
-				nums[i] = nums[j];
+		if(nums.length == 0) return 0;
+		int slow = 0;
+		for(int fast = 1; fast < nums.length; fast++) {
+			if(nums[slow] != nums[fast]) {
+				slow++;
+				nums[slow] = nums[fast];
 			}
 		}
-		return i + 1;
+		return slow+1;
 	}
 	
 	private static int removeDuplicates(int[] nums) {

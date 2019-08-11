@@ -4,27 +4,27 @@ public class ReverseInteger {
 	
 	public static void main(String[] args) {
 		
-		int num = 1534236469;
+		int num = Integer.MAX_VALUE;
 		
-		System.out.println(bruteForce(num));
+		System.out.println(noOverFlowSupport(num));
 		
 	}
-	
-	private static int bruteForce(int x) {
-		
-		int xReversed = 0;
+
+	private static int noOverFlowSupport(int x) {
+
+		int num = 0;
+
 		while (x != 0) {
-			int remainder = x % 10;
-			
-			int xReversedCopy = xReversed * 10 + remainder;
-			if ((xReversedCopy - remainder) / 10 != xReversed) {
+
+			int tail = x % 10;
+			int newNum = num * 10 + tail;
+			if((newNum - tail)/10 != num) {
 				return 0;
 			}
-			xReversed = xReversedCopy;
-			x = x / 10;
+			num = newNum;
+			x /= 10;
 		}
-		return xReversed;
-		
+		return num;
 	}
 	
 }

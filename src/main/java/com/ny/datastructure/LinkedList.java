@@ -21,8 +21,26 @@ public class LinkedList {
         return slow;
     }
 
-    public Node reverseLinkedList(Node head) {
-        Node previousNode = null, currentNode = head, nextNode;
+    public Node reverseLinkedList(Node L) {
+        Node sublistHead = null, subListIter = L;
+        while (subListIter != null) {
+            Node temp = subListIter.next;
+            subListIter.next = sublistHead;
+            sublistHead = subListIter;
+            subListIter = temp;
+        }
+        return sublistHead;
+    }
+
+    public Node reverseLinkedListWithDummy(Node L) {
+        Node dummy = new Node(0);
+        dummy.next = L;
+        Node subListHead = dummy;
+        int k = 1;
+        while(k++ < 0) {
+
+        }
+        Node previousNode = null, currentNode = L, nextNode;
 
         while (currentNode != null) {
             nextNode = currentNode.next;
@@ -30,7 +48,7 @@ public class LinkedList {
             previousNode = currentNode;
             currentNode = nextNode;
         }
-        return previousNode;
+        return dummy.next;
     }
 
     public void printReverse(Node head) {

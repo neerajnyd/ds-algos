@@ -9,19 +9,44 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Test {
 	
 	public static void main(String[] args) throws Exception {
-//		System.out.println(ascii_deletion_distance("thought", "sloughs"));
-		
-		String s = "abc";
-		System.out.println(s.indexOf("d"));
-		
-		
-		
+
+		Map<String, String> map = new HashMap<>();
+		map.put("abc", "neeraj");
+		final Map<String, String> collect = map.entrySet().stream()
+				.sorted(Map.Entry.comparingByKey())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o, o2) -> o2, LinkedHashMap::new));
+
 	}
-	
+
+	private static void internTest() {
+		String y = "Neeraj";
+		String z = new String("Neeraj");
+		String w = z.intern();
+		String x ="Neeraj";
+
+		if(x==y) {
+			System.out.println("same memory location");
+		} else {
+			System.out.println("Different memory location");
+		}
+
+		if(w==x) {
+			System.out.println("same memory location");
+		} else {
+			System.out.println("Different memory location");
+		}
+	}
+
+	private static void characterPrint() {
+		final char c = (char) ('0' + 1);
+		System.out.println(c);
+	}
+
 	public static void genericTest(List<? super Number> list){
 		List<Number> list2 = new ArrayList<>();
 		list.add(1);
