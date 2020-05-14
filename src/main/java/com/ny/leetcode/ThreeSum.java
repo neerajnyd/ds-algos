@@ -27,7 +27,7 @@ public class ThreeSum {
             if (i != 0 && N[i] == N[i - 1]) {
                 continue;
             }
-            int lo = i + 1, hi = N.length - 1, sum = 0 - N[i];
+            int sum = 0 - N[i], lo = i + 1, hi = N.length - 1;
             while (lo < hi) {
                 if (N[lo] + N[hi] > sum) {
                     hi--;

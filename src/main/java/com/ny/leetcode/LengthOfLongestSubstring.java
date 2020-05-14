@@ -9,39 +9,40 @@ public class LengthOfLongestSubstring {
 
     public static void main(String[] args) {
 
-        String s = "dfvdf";
-        int x = lengthOfLongestSubstring2(s);
+        String s = "pwwkew";
+        int x = lengthOfLongestSubstring(s);
         System.out.println(x);
 
     }
 
-    public static int lengthOfLongestSubstring2(String s) {
-        int n = s.length();
+    public static int lengthOfLongestSubstring_SlidingWindow(String s) {
         Set<Character> set = new HashSet<>();
-        int ans = 0;
-        for (int i=0, j=0; i<n && j<n;) {
-            if (!set.contains(s.charAt(i))) {
-                set.add(s.charAt(i++));
-                ans = Math.max(ans, i-j);
+        int max = 0, left = 0, right = 0;
+        while (right < s.length()) {
+            if (set.add(s.charAt(right))) {
+                right++;
+                max = Math.max(max, right - left);
             } else {
-                set.remove(s.charAt(j++));
+                set.remove(s.charAt(left++));
             }
         }
-        return ans;
+        return max;
     }
 
     public static int lengthOfLongestSubstring(String s) {
-        int n = s.length(), ans = 0;
-        Map<Character, Integer> map = new HashMap<>();
-        for (int j = 0, i = 0; j < n; j++) {
-            final char key = s.charAt(j);
-            if (map.containsKey(key)) {
-                i = Math.max(map.get(key), i);
+        int max = 0;
+        Map<Character, Integer> char_to_position = new HashMap<>();
+        for (int right = 0, left = 0; right < s.length(); right++) {
+            final char rightChar = s.charAt(right);
+            if (char_to_position.containsKey(rightChar)) {
+                Integer a = char_to_position.get(rightChar);
+                left = Math.max(a, left);
             }
-            ans = Math.max(ans, j - i + 1);
-            map.put(key, j + 1);
+            right++;
+            max = Math.max(max, right - left);
+            char_to_position.put(rightChar, right);
         }
-        return ans;
+        return max;
     }
 
 }

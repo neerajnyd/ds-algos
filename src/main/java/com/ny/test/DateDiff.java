@@ -7,8 +7,8 @@ import java.time.temporal.ChronoUnit;
 public class DateDiff {
 
     public static void main(String[] args) {
-        final LocalDate fromDayInclusive = LocalDate.now();
-        final LocalDate toDate = fromDayInclusive.plusMonths(7);
+        final LocalDate fromDayInclusive = LocalDate.of(2019, 12, 22);
+        final LocalDate toDate = fromDayInclusive.plusDays(84);
         System.out.println(toDate);
         /*final LocalDate toDayExclusive = LocalDate.of(2019, 5, 15);
         final ChronoUnit unit = ChronoUnit.MONTHS;

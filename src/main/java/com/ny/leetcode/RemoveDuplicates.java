@@ -28,14 +28,14 @@ public class RemoveDuplicates {
 	 */
 	public static int removeDuplicatesOfficial(int[] nums) {
 		if(nums.length == 0) return 0;
-		int slow = 0;
-		for(int fast = 1; fast < nums.length; fast++) {
-			if(nums[slow] != nums[fast]) {
-				slow++;
-				nums[slow] = nums[fast];
+		int ii = 0;
+		for(int jj = 1; jj < nums.length; jj++) {
+			if(nums[ii] != nums[jj]) {
+				ii++;
+				nums[ii] = nums[jj];
 			}
 		}
-		return slow+1;
+		return ii+1;
 	}
 	
 	private static int removeDuplicates(int[] nums) {

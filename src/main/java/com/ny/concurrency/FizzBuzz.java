@@ -1,133 +1,137 @@
 package com.ny.concurrency;
 
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Predicate;
+import java.util.function.IntConsumer;
 
 public class FizzBuzz {
+    private int n;
+    private Lock lock;
+    private Condition numCondition;
+    private Condition fizzCondition;
+    private Condition buzzCondition;
+    private Condition fizzBuzzCondition;
+    private int i;
+
+    public FizzBuzz(int n) {
+        this.n = n;
+        i = 1;
+        lock = new ReentrantLock();
+        numCondition = lock.newCondition();
+        fizzCondition = lock.newCondition();
+        buzzCondition = lock.newCondition();
+        fizzBuzzCondition = lock.newCondition();
+    }
+
+    public void fizz(Runnable printFizz) throws InterruptedException {
+        lock.lock();
+        while (i <= this.n) {
+            if (i % 3 == 0 && i % 5 != 0) {
+                printFizz.run();
+                i += 1;
+                fizzBuzzCondition.signal();
+                buzzCondition.signal();
+                numCondition.signal();
+            } else {
+                fizzCondition.await();
+            }
+        }
+        lock.unlock();
+    }
+
+    public void buzz(Runnable printBuzz) throws InterruptedException {
+        lock.lock();
+        while (i <= this.n) {
+            if (i % 5 == 0 && i % 3 != 0) {
+                printBuzz.run();
+                i += 1;
+                fizzBuzzCondition.signal();
+                fizzCondition.signal();
+                numCondition.signal();
+            } else {
+                buzzCondition.await();
+            }
+        }
+        lock.unlock();
+    }
+
+    public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
+        lock.lock();
+        while (i <= this.n) {
+            if (i % 15 == 0) {
+                printFizzBuzz.run();
+                i += 1;
+                numCondition.signal();
+                fizzCondition.signal();
+                buzzCondition.signal();
+            } else {
+                fizzBuzzCondition.await();
+            }
+        }
+        lock.unlock();
+    }
+
+    public void number(IntConsumer printNumber) throws InterruptedException {
+        lock.lock();
+        while (i <= this.n) {
+            if (i % 3 != 0 && i % 5 != 0) {
+                printNumber.accept(i);
+                i += 1;
+                fizzBuzzCondition.signal();
+                fizzCondition.signal();
+                buzzCondition.signal();
+            } else {
+                numCondition.await();
+            }
+        }
+        lock.unlock();
+    }
 
     public static void main(String[] args) throws Exception {
 
-        final Integer[] N = {1};
-        final Lock lock = new ReentrantLock();
-        final Condition fizz = lock.newCondition(); //condition for divisibility by 3 but not 5
-        final Predicate<Integer> fizzCondition = i -> i % 3 == 0 && i % 5 != 0;
-        final Condition buzz = lock.newCondition(); //condition for divisibility by 5 but not 4
-        final Predicate<Integer> buzzCondition = i -> i % 5 == 0 && i % 3 != 0;
-        final Condition fizzBuzz = lock.newCondition(); //condition for divisibility by 3 AND 5
-        final Predicate<Integer> fizzBuzzCondition = i -> i % 5 == 0 && i % 3 == 0;
-        final Condition number = lock.newCondition();
-        final Predicate<Integer> divisibleByAny = i -> i % 5 == 0 || i % 3 == 0;
-        final CyclicBarrier barrier = new CyclicBarrier(4);
+        IntConsumer iC              = value -> System.out.print(value + ", ");
+        Runnable    fizzPrinter     = () -> System.out.print("fizz, ");
+        Runnable    buzzPrinter     = () -> System.out.print("buzz, ");
+        Runnable    fizzBuzzPrinter = () -> System.out.print("fizzbuzz, ");
+        FizzBuzz    runner          = new FizzBuzz(25);
 
-        Runnable r1 = () -> {
-            awaitOnBarrier(barrier);
-            while (true) {
-                lock.lock();
-                while (!fizzCondition.test(N[0])) {
-                    awaitCondition(fizz);
-                }
-                System.out.println(N[0] + " Fizz");
-                N[0] = N[0] + 1;
-                sleep();
-                signalOthers(number, buzz, fizzBuzz);
-                lock.unlock();
+        Thread t1 = new Thread(() -> {
+            try {
+                runner.number(iC);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
-
-        Runnable r2 = () -> {
-            awaitOnBarrier(barrier);
-            while (true) {
-                lock.lock();
-                while (!buzzCondition.test(N[0])) {
-                    awaitCondition(buzz);
-                }
-                System.out.println(N[0] + " Buzz");
-                N[0] = N[0] + 1;
-                sleep();
-                signalOthers(number, fizz, fizzBuzz);
-                lock.unlock();
+        });
+        Thread t2 = new Thread(() -> {
+            try {
+                runner.fizz(fizzPrinter);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
-
-        Runnable r3 = () -> {
-            awaitOnBarrier(barrier);
-            while (true) {
-                lock.lock();
-                while (!fizzBuzzCondition.test(N[0])) {
-                    awaitCondition(fizzBuzz);
-                }
-                System.out.println(N[0] + " FizzBuzz");
-                N[0] = N[0] + 1;
-                sleep();
-                signalOthers(fizz, buzz, number);
-                lock.unlock();
+        });
+        Thread t3 = new Thread(() -> {
+            try {
+                runner.buzz(buzzPrinter);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
-
-        Runnable r4 = () -> {
-            awaitOnBarrier(barrier);
-            while (true) {
-                lock.lock();
-                while (divisibleByAny.test(N[0]))
-                    awaitCondition(number);
-                System.out.println(N[0]);
-                sleep();
-                N[0] = N[0] + 1;
-                signalOthers(fizz, buzz, fizzBuzz);
-                lock.unlock();
+        });
+        Thread t4 = new Thread(() -> {
+            try {
+                runner.fizzbuzz(fizzBuzzPrinter);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
-
-        threadStartAndJoin(r1, r2, r3, r4);
-    }
-
-    public static void signalOthers(Condition fizz, Condition buzz, Condition number) {
-        fizz.signal();
-        buzz.signal();
-        number.signal();
-    }
-
-    private static void threadStartAndJoin(Runnable r1, Runnable r2, Runnable r3, Runnable r4) throws InterruptedException {
-        Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
-        Thread t3 = new Thread(r3);
-        Thread t4 = new Thread(r4);
+        });
         t1.start();
         t2.start();
         t3.start();
         t4.start();
-
         t1.join();
         t2.join();
         t3.join();
         t4.join();
-    }
 
-    private static void sleep() {
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
-
-    private static void awaitCondition(Condition fizz) {
-        try {
-            fizz.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void awaitOnBarrier(CyclicBarrier barrier) {
-        try {
-            barrier.await();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

@@ -18,15 +18,14 @@ public class DynamicFibonacci {
 		
 		int[] memoizationArray = new int[n + 1];
 		Arrays.fill(memoizationArray, -1);
-		
-		int fib = fibonacci(n, memoizationArray);
-		return fib;
+
+		return fibonacci(n, memoizationArray);
 	}
 	
 	private static int fibonacci(int n, int[] a) {
 		
-		if (n <= 2) {
-			return 1;
+		if (n <= 1) {
+			return n;
 		} else if (a[n] != -1) {
 			return a[n];
 		} else {
