@@ -39,7 +39,33 @@ public class DailyQuestionSelector {
         COMPLETED_QUESTIONS.add(22);//House Robber
         COMPLETED_QUESTIONS.add(71);//Implement Trie (Prefix Tree)
 
+        /* Day-4 */
+        COMPLETED_QUESTIONS.add(14);//Missing Number
+        ALMOST_COMPLETE_QUESTIONS.add(19);//Longest Common Subsequence
+        ALMOST_COMPLETE_QUESTIONS.add(37);//Non-overlapping Intervals
+        COMPLETED_QUESTIONS.add(46);//Set Matrix Zeroes
+        NEED_HELP_QUESTIONS.add(17);//Coin Change
 
+        /* Day-5 */
+        COMPLETED_QUESTIONS.add(6);//Maximum Product Subarray
+        ALMOST_COMPLETE_QUESTIONS.add(33);//Graph Valid Tree
+        COMPLETED_QUESTIONS.add(53);//Valid Anagram
+
+        /* Day-6 */
+        ALMOST_COMPLETE_QUESTIONS.add(11);//Sum of Two Integers
+        NEED_HELP_QUESTIONS.add(21);//Combination Sum
+        COMPLETED_QUESTIONS.add(27);//Clone Graph
+        NEED_HELP_QUESTIONS.add(38);//Meeting Rooms II
+        NEED_HELP_QUESTIONS.add(51);//Longest Repeating Character Replacement
+        COMPLETED_QUESTIONS.add(69);//Kth Smallest Element in a BST
+
+        /* Day-7 */
+        /*COMPLETED_QUESTIONS.add(5);//Maximum Subarray
+        COMPLETED_QUESTIONS.add(34);//Number of Connected Components in an Undirected Graph
+        COMPLETED_QUESTIONS.add(52);//Minimum Window Substring
+        COMPLETED_QUESTIONS.add(62);//Invert/Flip Binary Tree
+        COMPLETED_QUESTIONS.add(64);//Binary Tree Level Order Traversal
+        COMPLETED_QUESTIONS.add(73);//Word Search II*/
     }
 
     public static void main(String[] args) {

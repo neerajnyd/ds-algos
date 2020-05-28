@@ -1,4 +1,4 @@
-package com.ny.leetcode.curatedlistchallenge.day2;
+package com.ny.leetcode.curatedlistchallenge.day3;
 
 /*
 https://leetcode.com/problems/implement-trie-prefix-tree/

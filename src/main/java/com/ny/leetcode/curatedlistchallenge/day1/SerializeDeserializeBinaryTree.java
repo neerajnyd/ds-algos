@@ -1,6 +1,6 @@
 package com.ny.leetcode.curatedlistchallenge.day1;
 
-import com.ny.leetcode.TreeNode;
+import com.ny.leetcode.domain.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,5 +1,7 @@
 package com.ny.leetcode;
 
+import com.ny.leetcode.domain.TreeNode;
+
 public class BT_MaximumPathSum {
     int maxValueFinalAnswer;
 

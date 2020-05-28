@@ -1,5 +1,7 @@
 package com.ny.leetcode;
 
+import com.ny.leetcode.domain.TreeNode;
+
 import java.util.LinkedList;
 import java.util.Queue;
 

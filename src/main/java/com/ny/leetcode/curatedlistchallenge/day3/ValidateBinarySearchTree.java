@@ -1,6 +1,6 @@
-package com.ny.leetcode.curatedlistchallenge.day2;
+package com.ny.leetcode.curatedlistchallenge.day3;
 
-import com.ny.leetcode.TreeNode;
+import com.ny.leetcode.domain.TreeNode;
 
 /*
 https://leetcode.com/problems/validate-binary-search-tree/

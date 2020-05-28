@@ -90,36 +90,35 @@ public class FizzBuzz {
 
     public static void main(String[] args) throws Exception {
 
-        IntConsumer iC              = value -> System.out.print(value + ", ");
         Runnable    fizzPrinter     = () -> System.out.print("fizz, ");
         Runnable    buzzPrinter     = () -> System.out.print("buzz, ");
         Runnable    fizzBuzzPrinter = () -> System.out.print("fizzbuzz, ");
-        FizzBuzz    runner          = new FizzBuzz(25);
+        FizzBuzz    fizzBuzz          = new FizzBuzz(25);
 
         Thread t1 = new Thread(() -> {
             try {
-                runner.number(iC);
+                fizzBuzz.number(value -> System.out.print(value + ", "));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         Thread t2 = new Thread(() -> {
             try {
-                runner.fizz(fizzPrinter);
+                fizzBuzz.fizz(fizzPrinter);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         Thread t3 = new Thread(() -> {
             try {
-                runner.buzz(buzzPrinter);
+                fizzBuzz.buzz(buzzPrinter);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         Thread t4 = new Thread(() -> {
             try {
-                runner.fizzbuzz(fizzBuzzPrinter);
+                fizzBuzz.fizzbuzz(fizzBuzzPrinter);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
