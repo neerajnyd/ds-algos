@@ -1,6 +1,7 @@
 package com.ny.vanhack;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,12 +16,37 @@ public class MeetupSchedule {
      *  1. INTEGER_ARRAY firstDay
      *  2. INTEGER_ARRAY lastDay
      */
-
-    //TODO:
     public static int countMeetings(List<Integer> firstDay, List<Integer> lastDay) {
-        // Write your code here
 
-        return firstDay.size();
+        int[][] investorDays = new int[firstDay.size()][2];
+        for (int i = 0; i < firstDay.size(); i++) {
+            investorDays[i][0] = firstDay.get(i);
+            investorDays[i][1] = lastDay.get(i);
+        }
+        Arrays.sort(investorDays, (e1, e2) -> {
+            int x = Integer.compare(e1[1], e2[1]);
+            if (x != 0) return x;
+            else return Integer.compare(e1[0], e2[0]);
+        });
+
+        int finalDayOfMeeting = investorDays[investorDays.length - 1][1];
+        boolean[] availableDays = new boolean[finalDayOfMeeting + 1];
+        int meetings = 0;
+        for (int[] eachInvestorDays : investorDays) {
+            int start = eachInvestorDays[0];
+            int end = eachInvestorDays[1];
+            while (start <= end) {
+                if (!availableDays[start]) {
+                    availableDays[start] = true;
+                    meetings++;
+                    break;
+                } else {
+                    start++;
+                }
+            }
+
+        }
+        return meetings;
     }
 
     public static void main(String[] args) throws IOException {
