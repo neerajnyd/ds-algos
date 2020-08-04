@@ -17,10 +17,26 @@ public class Test {
 
     public static void main(String[] args) throws Exception{
 
+        double x = (double)8/3;
+        System.out.println(x);
+
+    }
+
+
+
+    private static int doStuff(String[] args) {
+        return Integer.parseInt(args[0]);
+    }
+
+    private static void doSome(String s) {
+        s = null;
+        s = "xyz";
+    }
+
+    public static void addToDate() {
         LocalDate date = LocalDate.now();
         System.out.println(date.plusDays(365));
-
-	}
+    }
 
     private static int countBits(int num) {
 		int numBits = 0;

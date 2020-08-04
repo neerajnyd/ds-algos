@@ -21,4 +21,15 @@ public class JumpGame {
         return false;
     }
 
+    public boolean canJump2(int[] A) {
+        int leftMostGoodPos = A.length - 1;
+        for (int currPos = A.length - 1; currPos >= 0; currPos--) {
+            int jumpFromCurrPos = A[currPos];
+            int maxReachablePos = currPos + jumpFromCurrPos;
+            if (maxReachablePos >= leftMostGoodPos)
+                leftMostGoodPos = currPos;
+        }
+        return leftMostGoodPos == 0;
+    }
+
 }

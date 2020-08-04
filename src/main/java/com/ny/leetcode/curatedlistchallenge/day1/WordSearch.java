@@ -27,23 +27,25 @@ public class WordSearch {
         return false;
     }
 
-    private static boolean check(char[][] B, int i, int j, String word, int x) {
-        if (x == word.length()) return true;
+    private static boolean check(char[][] B, int i, int j, String word, int posUnderTest) {
+        if (posUnderTest == word.length()) return true;
 
-        if (i<0 || j<0 || i>=B.length || j>=B[0].length || word.charAt(x) != B[i][j])
+        char charUnderTest = word.charAt(posUnderTest);
+        //these checks are here so we can make calls before doing this sanity of input
+        if (i<0 || j<0 || i>=B.length || j>=B[0].length || charUnderTest != B[i][j])
             return false;
 
-        B[i][j] = '0';
+        B[i][j] = '0';//the character becomes unusable till we check its surroundings
 
-        boolean leftCheck = check(B, i, j - 1, word, x + 1);
-        boolean rightCheck = check(B, i, j + 1, word, x + 1);
-        boolean upCheck = check(B, i - 1, j, word, x + 1);
-        boolean downCheck = check(B, i + 1, j, word, x + 1);
+        boolean leftCheck = check(B, i, j - 1, word, posUnderTest + 1);
+        boolean rightCheck = check(B, i, j + 1, word, posUnderTest + 1);
+        boolean upCheck = check(B, i - 1, j, word, posUnderTest + 1);
+        boolean downCheck = check(B, i + 1, j, word, posUnderTest + 1);
 
         if(leftCheck || rightCheck || upCheck || downCheck)
             return true;
 
-        B[i][j] = word.charAt(x);
+        B[i][j] = charUnderTest; //character is usable again
 
         return false;
     }

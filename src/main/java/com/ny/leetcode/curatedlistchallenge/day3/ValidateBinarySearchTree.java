@@ -19,22 +19,13 @@ public class ValidateBinarySearchTree {
             here 4 is on the right side of root and thus violates the property.
 
         */
-        if(node == null) return true;
-
-        return helper(node.left, Long.MIN_VALUE, node.val)
-                && helper(node.right, node.val, Long.MAX_VALUE);
-
+        return isValidBST(node, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    private boolean helper(TreeNode node, long minAllowed, long maxAllowed) {
-
-        if(node == null) return true;
-        long val = node.val;
-        if(val <= minAllowed || val >= maxAllowed) return false;
-
-        return helper(node.left, minAllowed, val)
-                && helper(node.right, val, maxAllowed);
-
+    private boolean isValidBST(TreeNode tree, long min, long max) {
+        if (tree == null) return true;
+        if (tree.val <= min || tree.val >= max) return false;
+        return isValidBST(tree.left, min, tree.val) && isValidBST(tree.right, tree.val, max);
     }
 
 }

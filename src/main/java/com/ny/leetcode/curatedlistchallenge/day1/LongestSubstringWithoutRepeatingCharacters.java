@@ -8,12 +8,12 @@ import java.util.Set;
 /*
 https://leetcode.com/problems/longest-substring-without-repeating-characters/
  */
-//TODO: liner time solution
+//TODO: linear time solution
 public class LongestSubstringWithoutRepeatingCharacters {
 
     public static void main(String[] args) {
 
-        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(lengthOfLongestSubstring("pwwkew"));
 
     }
 
@@ -38,7 +38,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
         return maxLen;
     }
 
-    public static int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring_Map(String s) {
         int max = 0;
         Map<Character, Integer> map = new HashMap<>();
         for (int i = 0, j = 0; i < s.length(); i++) {
@@ -50,6 +50,25 @@ public class LongestSubstringWithoutRepeatingCharacters {
             }
             map.put(c, i);
             max = Math.max(max, i - j + 1);
+        }
+        return max;
+    }
+
+    public static int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int max = 0;
+        Set<Character> windowSet = new HashSet<>();
+        int left = 0, right = 0;
+        while (left < n && right < n) {
+            //extend left till we have a valid window
+            while (windowSet.contains(s.charAt(right))) {
+                windowSet.remove(s.charAt(left));
+                left++;
+            }
+            //add to the valid window and extend right
+            windowSet.add(s.charAt(right));
+            right++;
+            max = Math.max(max, right - left);
         }
         return max;
     }

@@ -14,7 +14,7 @@ public class TwoSum {
 		
 		int[] nums = {-1, -2, -3, -4, -5};
 		int target = -8;
-		int result[] = onePassHashTable(nums, target);
+		int[] result = onePassHashTable(nums, target);
 		Arrays.stream(result).forEach((n) -> System.out.print(n + " "));
 		
 	}

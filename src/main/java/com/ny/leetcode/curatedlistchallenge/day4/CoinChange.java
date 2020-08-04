@@ -4,9 +4,6 @@ import java.util.Arrays;
 
 /*
 https://leetcode.com/problems/coin-change/
- *
-
- TODO: this is a C3
  */
 public class CoinChange {
 
@@ -20,19 +17,24 @@ public class CoinChange {
 
     public static int coinChange(int[] coins, int amount) {
 
+        /* we don't want to make more than max */
         int max = amount + 1;
 
+        //represents the number of coins required to create sum=index
+        //so the indices represent the target value
         int[] dp = new int[max];
 
+        //populate with a arbitrary large number for Math.min comparison
         Arrays.fill(dp, max);
-
+        //it takes zero coins to make amount zero
         dp[0] = 0;
 
-        for (int i = 1; i < dp.length; i++) {
-            for (int c : coins)
-                if (c <= i)
-                    dp[i] = Math.min(dp[i], dp[i - c] + 1);
-        }
+        //for each target amount from 0 to amount
+        for (int i = 1; i < dp.length; i++)
+            for (int c : coins) //check with each coin
+                if (c <= i) //coins of value larger than target amount are not applicable
+                    dp[i] = Math.min(dp[i], dp[i - c] + 1); //compare between the already present coin value AND the value obtained from using the current coin + coin value present at the remaining value
+
         return dp[amount] <= amount ? dp[amount] : -1;
     }
 

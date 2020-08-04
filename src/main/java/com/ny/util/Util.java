@@ -3,6 +3,7 @@ package com.ny.util;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Util {
@@ -24,6 +25,22 @@ public class Util {
                 "-05:00"
         ));
 
+    }
+
+    public static void print2DArray(int[][] A) {
+        String s = Arrays.deepToString(A).replace("], ", "]\n");
+        System.out.println(s.substring(1, s.length()-1));
+        System.out.println();
+    }
+
+    public static void print2DArray(char[][] C) {
+        String s = Arrays.deepToString(C).replace("], ", "]\n");
+        System.out.println(s.substring(1, s.length()-1));
+        System.out.println();
+    }
+
+    public static void printArray(int[][] A) {
+        System.out.println(Arrays.toString(A));
     }
 
     private static String formatDateTime(String value, String format, String timeZoneOffset) throws Exception{
