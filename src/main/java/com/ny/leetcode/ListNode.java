@@ -8,8 +8,8 @@ public class ListNode {
     public ListNode() {
     }
 
-    public ListNode(int x) {
-        val = x;
+    public ListNode(int val) {
+        this.val = val;
     }
 
     public ListNode(int val, ListNode next) {

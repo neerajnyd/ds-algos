@@ -1,4 +1,4 @@
-package com.ny.leetcode.curatedlistchallenge.day7;
+package com.ny.leetcode.curated.tree;
 
 import com.ny.leetcode.domain.TreeNode;
 
