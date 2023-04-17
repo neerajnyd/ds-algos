@@ -1,24 +1,30 @@
 package com.ny.concurrency.recipes.producerconsumer;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class Consumer implements Runnable {
 
-    private EventStorage storage;
+    private final ConcurrentQueue<Integer> queue;
 
-    public Consumer(EventStorage storage) {
-        this.storage = storage;
+    public Consumer(ConcurrentQueue<Integer> queue) {
+        this.queue = queue;
     }
 
     @Override
     public void run() {
         for (int i = 0; i < 100; i++) {
-            storage.get();
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Integer nextInt = queue.get();
+            System.out.printf("Consumed %d in %s. Queue size is %d \n", nextInt, Thread.currentThread().getName(), queue.size());
+            sleeep();
+        }
+    }
+
+    private static void sleeep() {
+        try {
+            TimeUnit.SECONDS.sleep(ThreadLocalRandom.current().nextInt(1, 5));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

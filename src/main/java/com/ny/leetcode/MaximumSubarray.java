@@ -13,15 +13,15 @@ public class MaximumSubarray {
     public static int maxSubArray(int[] nums) {
         if (nums.length == 1) return nums[0];
 
-        int maxSumAtLastPos = nums[0];
-        int globalMax = nums[0];
+        int sum = nums[0];
+        int maxSum = nums[0];
 
-        for (int i = 1; i < nums.length; i++) {
-            int currSum = Math.max(nums[i], nums[i] + maxSumAtLastPos);
-            maxSumAtLastPos = currSum;
-            globalMax = Math.max(globalMax, currSum);
+        for (int num : nums) {
+            int currSum = Math.max(num, num + sum);
+            sum = currSum;
+            maxSum = Math.max(maxSum, currSum);
         }
-        return globalMax;
+        return maxSum;
 
     }
 

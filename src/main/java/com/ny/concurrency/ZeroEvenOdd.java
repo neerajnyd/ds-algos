@@ -4,10 +4,10 @@ import java.util.concurrent.Semaphore;
 import java.util.function.IntConsumer;
 
 public class ZeroEvenOdd {
-    private int n;
-    private Semaphore zeroPermit = new Semaphore(1);
-    private Semaphore oddPermit = new Semaphore(0);
-    private Semaphore evenPermit = new Semaphore(0);
+    private final int n;
+    private final Semaphore zeroPermit = new Semaphore(1);
+    private final Semaphore oddPermit = new Semaphore(0);
+    private final Semaphore evenPermit = new Semaphore(0);
 
     public ZeroEvenOdd(int n) {
         this.n = n;

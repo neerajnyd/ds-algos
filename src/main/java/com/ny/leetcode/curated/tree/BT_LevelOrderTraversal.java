@@ -2,6 +2,8 @@ package com.ny.leetcode.curated.tree;
 
 import com.ny.leetcode.domain.TreeNode;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /*
@@ -11,10 +13,28 @@ public class BT_LevelOrderTraversal {
 
     public List<List<Integer>> levelOrder(TreeNode root) {
 
-        return null;
+        if (root == null) return Collections.emptyList();
+
+        List<List<Integer>> levels = new ArrayList<>();
+        levelOrderHelper(levels, Collections.singletonList(root));
+        return levels;
     }
 
-    public static void main(String[] args) {
+    private void levelOrderHelper(List<List<Integer>> levels, List<TreeNode> sameLevelNodes) {
 
+        List<TreeNode> nextSameLevelNodes = new ArrayList<>();
+        List<Integer> level = new ArrayList<>();
+
+        for (TreeNode node : sameLevelNodes) {
+            level.add(node.val);
+
+            if (node.left != null) nextSameLevelNodes.add(node.left);
+            if (node.right != null) nextSameLevelNodes.add(node.right);
+
+        }
+        levels.add(level);
+        if (!nextSameLevelNodes.isEmpty()) {
+            levelOrderHelper(levels, nextSameLevelNodes);
+        }
     }
 }

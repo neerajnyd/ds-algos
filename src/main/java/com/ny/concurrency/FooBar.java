@@ -6,34 +6,34 @@ import java.util.concurrent.Semaphore;
 https://leetcode.com/problems/print-foobar-alternately/submissions/
  */
 public class FooBar {
-    private int n;
-    private Semaphore oddPermit;
-    private Semaphore evenPermit;
+    private final int n;
+    private final Semaphore barPermit;
+    private final Semaphore fooPermit;
 
     public FooBar(int n) {
         this.n = n;
-        oddPermit = new Semaphore(0);
-        evenPermit = new Semaphore(1);
+        barPermit = new Semaphore(0);
+        fooPermit = new Semaphore(1);
     }
 
     public void foo(Runnable printFoo) throws InterruptedException {
         for (int i = 0; i < n; i++) {
-            evenPermit.acquire();
+            fooPermit.acquire();
             printFoo.run();
-            oddPermit.release();
+            barPermit.release();
         }
     }
 
     public void bar(Runnable printBar) throws InterruptedException {
         for (int i = 0; i < n; i++) {
-            oddPermit.acquire();
+            barPermit.acquire();
             printBar.run();
-            evenPermit.release();
+            fooPermit.release();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        FooBar   fb     = new FooBar(3);
+        FooBar   fb     = new FooBar(100);
         Runnable fooRun = () -> System.out.print("foo");
         Runnable barRun = () -> System.out.print("bar");
 
